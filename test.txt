@@ -1,0 +1,7 @@
+POST http://localhost/api/message 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMmJmYTE3N2E2ZTM1ZGZiYmM0Y2U2NyIsImlhdCI6MTY0NzA0OTIzOSwiZXhwIjoxNjQ5NjQxMjM5fQ.XGORV85wML53oW95wYxH3itpHpH-qvD0cSduvzzQnys
+{
+    "sender": "622bfa177a6e35dfbbc4ce67",
+    "content": "hello",
+    "chat":"622cc34310ec1734b93af18e"
+}
