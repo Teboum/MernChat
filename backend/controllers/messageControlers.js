@@ -19,8 +19,8 @@ exports.sendMessage = expressAsyncHandler(async (req, res) => {
   try {
     var message = await Message.create(newMessage);
 
-    message = await message.populate("sender", "name,pic");
-    message = await message.populate("chat", "name,pic");
+    message = await message.populate("sender", "name pic");
+    message = await message.populate("chat");
     message = await User.populate(message, {
       path: "chat.users",
       select: "name pic email",
@@ -40,7 +40,7 @@ exports.allMessages = expressAsyncHandler(async (req, res, next) => {
   try {
     console.log(req.params);
     const messages = await Message.find({ chat: req.params.chatId })
-      .populate("sender", "name,pic,email")
+      .populate("sender", "name pic email")
       .populate("chat");
     res.json(messages);
   } catch (err) {

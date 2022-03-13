@@ -1,9 +1,3 @@
-.styles_scrollable-div__prSCv {
-  display: flex;
-  flex-direction: column;
-}
-.message {
-  width: 100%;
-  align-self: flex-end;
-  justify-content: flex-end;
+.messages {
+  overflow-y: scroll;
 }

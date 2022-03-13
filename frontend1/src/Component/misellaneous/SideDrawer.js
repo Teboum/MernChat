@@ -28,6 +28,10 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import ChatLoading from "../ChatLoading";
 import UserListItem from "../userAvatar/UserListItem";
+import { getSender } from "../../config/ChatLogics";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
+
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -37,7 +41,14 @@ const SideDrawer = () => {
   const toast = useToast();
   const history = useHistory();
 
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notifications,
+    setNotifications,
+  } = ChatState();
 
   const logOutHandler = () => {
     localStorage.removeItem("userInfo");
@@ -85,7 +96,6 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      console.log(userId);
       const { data } = await axios.post(
         "api/chats",
         { userId: userId },
@@ -133,9 +143,28 @@ const SideDrawer = () => {
         <div>
           <Menu>
             <MenuButton p={1}>
+              <NotificationBadge
+                count={notifications.length}
+                effect={Effect.SCALE}
+              />
               <BellIcon fontSize="2x1" m={1} />
             </MenuButton>
-            {/**<MenuList></MenuList> */}
+            <MenuList>
+              {!notifications.length && "No new Messages"}
+              {notifications.map((notif, i) => (
+                <MenuItem
+                  key={i}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotifications(notifications.filter((n) => n !== notif));
+                  }}
+                >
+                  {notif.chat.isGroupChat
+                    ? `New Message in ${notif.chat.chatName}`
+                    : `New Message from ${getSender(user, notif.chat.users)}`}
+                </MenuItem>
+              ))}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>

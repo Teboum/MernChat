@@ -31,7 +31,7 @@ const UpdateGroupChatModal = ({ setFetchAgain, fetchAgain, fetchMessages }) => {
   const [renameLoading, setRenameLoading] = useState(false);
 
   const { user, selectedChat, chats, setChats, setSelectedChat } = ChatState();
-  console.log(selectedChat);
+
   const toast = useToast();
 
   const handleRename = async () => {
